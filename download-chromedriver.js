@@ -5,17 +5,36 @@ var request = require('request')
 var unzip = require('unzip')
 
 var config = {
-  outputPath: path.join(__dirname, 'bin', 'chromedriver.zip'),
+  outputPath: path.join(__dirname, 'bin'),
   version: 'v2.15',
   electron: 'v0.' + require('./package').version.split('.')[1] + '.0',
   baseUrl: 'https://github.com/atom/electron/releases/download/'
 }
 
+function handleError (error) {
+  if (!error) return
 
-mkdirp.sync(path.dirname(config.outputPath))
+  var message = error.message || error
+  console.error('Download failed: ' + message)
+  process.exit(1)
+}
 
-var fullUrl = config.baseUrl + config.electron + '/chromedriver-' + config.version + '-' + process.platform + '-' + process.arch + '.zip'
-console.log(fullUrl);
-console.log('https://github.com/atom/electron/releases/download/v0.33.0/chromedriver-v2.15-darwin-x64.zip');
 
-request.get(fullUrl).pipe(unzip.Extract({path: path.dirname(config.outputPath)}))
+mkdirp(config.outputPath, function (error) {
+  if (error) return handleError(error)
+
+  var fileName = 'chromedriver-' + config.version + '-' + process.platform + '-' + process.arch + '.zip'
+  var fullUrl = config.baseUrl + config.electron + '/' + fileName
+  var requestStream = request.get(fullUrl)
+  requestStream.on('error', handleError)
+
+  var zipStream = unzip.Extract({path: config.outputPath})
+  zipStream.on('error', handleError)
+  zipStream.on('close', function () {
+    if (process.platform !== 'win32') {
+      fs.chmod(path.join(__dirname, 'bin', 'chromedriver'), '755', handleError)
+    }
+  })
+
+  requestStream.pipe(zipStream)
+})
