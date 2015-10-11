@@ -11,4 +11,4 @@ var options = {
   stdio: 'inherit'
 }
 
-ChildProcess.spawn(chromeDriverPath, args, options)
+ChildProcess.spawn(command, args, options)
