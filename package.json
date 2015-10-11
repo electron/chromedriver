@@ -1,0 +1,18 @@
+{
+  "name": "electron-chromedriver",
+  "version": "0.33.0",
+  "description": "Electron ChromeDriver",
+  "bin": {
+    "chromdriver": "./bin/chromedriver"
+  },
+  "scripts": {
+    "install": "node ./download-chromedriver.js"
+  },
+  "author": "Kevin Sawicki",
+  "license": "ISC",
+  "dependencies": {
+    "mkdirp": "^0.5.1",
+    "request": "^2.65.0",
+    "unzip": "^0.1.11"
+  }
+}
