@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+var ChildProcess = require('child_process')
+var path = require('path')
+
+var command = path.join(__dirname, 'bin', 'chromedriver')
+var args = process.argv.slice(2)
+var options = {
+  cwd: process.cwd(),
+  env: process.env,
+  stdio: 'inherit'
+}
+
+ChildProcess.spawn(chromeDriverPath, args, options)
