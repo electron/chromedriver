@@ -11,4 +11,10 @@ var options = {
   stdio: 'inherit'
 }
 
-ChildProcess.spawn(command, args, options)
+var chromeDriverProcess = ChildProcess.spawn(command, args, options)
+process.on('exit', function () {
+  try {
+    chromeDriverProcess.kill()
+  } catch (ignored) {
+  }
+})
