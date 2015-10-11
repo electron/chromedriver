@@ -5,10 +5,11 @@ var request = require('request')
 var unzip = require('unzip')
 
 var config = {
-  outputPath: path.join(__dirname, 'bin'),
-  version: 'v2.15',
+  baseUrl: 'https://github.com/atom/electron/releases/download/',
+  // Sync minor version of package to minor version of Electron release
   electron: 'v0.' + require('./package').version.split('.')[1] + '.0',
-  baseUrl: 'https://github.com/atom/electron/releases/download/'
+  outputPath: path.join(__dirname, 'bin'),
+  version: 'v2.15'
 }
 
 function handleError (error) {
