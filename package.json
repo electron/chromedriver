@@ -11,7 +11,7 @@
     "test": "standard && mocha"
   },
   "author": "Kevin Sawicki",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "mkdirp": "^0.5.1",
     "request": "^2.65.0",
