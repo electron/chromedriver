@@ -6,6 +6,8 @@ var describe = global.describe
 var it = global.it
 
 describe('chromedriver binary', function () {
+  this.timeout(10000)
+
   it('launches successfully', function (done) {
     var command = path.join(__dirname, '..', 'chromedriver.js')
     var args = [
