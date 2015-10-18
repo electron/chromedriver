@@ -13,7 +13,7 @@ version for [Electron](http://electron.atom.io).
 
 This minor version of this library tracks the minor version of the Electron
 versions released. So if you are using Electron `0.34.x` you would want to use
-a `electron-chromedriver` dependency of `^0.34` in your `package.json` file.
+an `electron-chromedriver` dependency of `^0.34` in your `package.json` file.
 
 This library is used by [spectron](https://github.com/kevinsawicki/spectron).
 
