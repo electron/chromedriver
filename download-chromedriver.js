@@ -20,7 +20,6 @@ function handleError (error) {
   process.exit(1)
 }
 
-
 mkdirp(config.outputPath, function (error) {
   if (error) return handleError(error)
 

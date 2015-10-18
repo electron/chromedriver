@@ -7,7 +7,8 @@
     "chromedriver": "./chromedriver.js"
   },
   "scripts": {
-    "install": "node ./download-chromedriver.js"
+    "install": "node ./download-chromedriver.js",
+    "test": "standard"
   },
   "author": "Kevin Sawicki",
   "license": "ISC",
@@ -15,5 +16,8 @@
     "mkdirp": "^0.5.1",
     "request": "^2.65.0",
     "unzip": "^0.1.11"
+  },
+  "devDependencies": {
+    "standard": "^5.3.1"
   }
 }
