@@ -4,7 +4,7 @@
   "description": "Electron ChromeDriver",
   "repository": "https://github.com/kevinsawicki/electron-chromedriver",
   "bin": {
-    "chromedriver": "./chromedriver"
+    "chromedriver": "./chromedriver.js"
   },
   "scripts": {
     "install": "node ./download-chromedriver.js"
