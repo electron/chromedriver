@@ -9,11 +9,11 @@ describe('chromedriver binary', function () {
   this.timeout(10000)
 
   it('launches successfully', function (done) {
-    var command = path.join(__dirname, '..', 'chromedriver.js')
     var args = [
+      path.join(__dirname, '..', 'chromedriver.js'),
       '-v'
     ]
-    var chromeDriver = ChildProcess.spawn(command, args)
+    var chromeDriver = ChildProcess.spawn(process.execPath, args)
 
     var output = ''
     chromeDriver.stdout.on('data', function (data) { output += data })
