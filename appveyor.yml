@@ -1,5 +1,7 @@
 build: off
 
+skip_tags: true
+
 environment:
   nodejs_version: "4.2.1"
 
