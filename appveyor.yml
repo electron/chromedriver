@@ -2,6 +2,10 @@ build: off
 
 skip_tags: true
 
+branches:
+  only:
+    - master
+
 environment:
   nodejs_version: "4.2.1"
 

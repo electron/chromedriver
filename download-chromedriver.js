@@ -1,8 +1,8 @@
+var Decompress = require('decompress')
 var fs = require('fs')
 var mkdirp = require('mkdirp')
 var path = require('path')
 var request = require('request')
-var unzip = require('unzip')
 
 var config = {
   baseUrl: 'https://github.com/atom/electron/releases/download/',
@@ -20,21 +20,27 @@ function handleError (error) {
   process.exit(1)
 }
 
+function unzip (zipped, callback) {
+  var decompress = new Decompress()
+  decompress.src(zipped)
+  decompress.dest(config.outputPath)
+  decompress.use(Decompress.zip())
+  decompress.run(callback)
+}
+
 mkdirp(config.outputPath, function (error) {
   if (error) return handleError(error)
 
   var fileName = 'chromedriver-' + config.version + '-' + process.platform + '-' + process.arch + '.zip'
   var fullUrl = config.baseUrl + config.electron + '/' + fileName
-  var requestStream = request.get(fullUrl)
-  requestStream.on('error', handleError)
 
-  var zipStream = unzip.Extract({path: config.outputPath})
-  zipStream.on('error', handleError)
-  zipStream.on('close', function () {
-    if (process.platform !== 'win32') {
-      fs.chmod(path.join(__dirname, 'bin', 'chromedriver'), '755', handleError)
-    }
+  request.get({uri: fullUrl, encoding: null}, function (error, response, body) {
+    if (error) return handleError(error)
+    unzip(body, function (error) {
+      if (error) return handleError(error)
+      if (process.platform !== 'win32') {
+        fs.chmod(path.join(__dirname, 'bin', 'chromedriver'), '755', handleError)
+      }
+    })
   })
-
-  requestStream.pipe(zipStream)
 })
