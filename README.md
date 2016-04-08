@@ -10,7 +10,7 @@
 [![npm:](https://img.shields.io/npm/v/electron-chromedriver.svg)](https://www.npmjs.com/packages/electron-chromedriver)
 [![dependencies:?](https://img.shields.io/npm/dm/electron-chromedriver.svg)](https://www.npmjs.com/packages/electron-chromedriver)
 
-Simple node module to download the [ChromeDriver](https://code.google.com/p/selenium/wiki/ChromeDriver)
+Simple node module to download the [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver)
 version for [Electron](http://electron.atom.io).
 
 This minor version of this library tracks the minor version of the Electron
