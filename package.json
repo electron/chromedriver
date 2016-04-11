@@ -2,7 +2,7 @@
   "name": "electron-chromedriver",
   "version": "0.37.1",
   "description": "Electron ChromeDriver",
-  "repository": "https://github.com/kevinsawicki/electron-chromedriver",
+  "repository": "https://github.com/electron/chromedriver",
   "bin": {
     "chromedriver": "./chromedriver.js"
   },
