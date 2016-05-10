@@ -4,10 +4,12 @@ var mkdirp = require('mkdirp')
 var path = require('path')
 var request = require('request')
 
+var versionSegments = require('./package').version.split('.')
+
 var config = {
   baseUrl: 'https://github.com/atom/electron/releases/download/',
   // Sync minor version of package to minor version of Electron release
-  electron: 'v0.' + require('./package').version.split('.')[1] + '.0',
+  electron: 'v' + versionSegments[0] + '.' + versionSegments[1] + '.0',
   outputPath: path.join(__dirname, 'bin'),
   version: 'v2.15'
 }
@@ -36,6 +38,7 @@ mkdirp(config.outputPath, function (error) {
 
   request.get({uri: fullUrl, encoding: null}, function (error, response, body) {
     if (error) return handleError(error)
+    if (response.statusCode !== 200) return handleError(Error('Non-200 response (' + response.statusCode + ')'))
     unzip(body, function (error) {
       if (error) return handleError(error)
       if (process.platform !== 'win32') {
