@@ -4,10 +4,12 @@ var mkdirp = require('mkdirp')
 var path = require('path')
 var request = require('request')
 
+var versionSegments = require('./package').version.split('.')
+
 var config = {
   baseUrl: 'https://github.com/atom/electron/releases/download/',
   // Sync minor version of package to minor version of Electron release
-  electron: 'v0.' + require('./package').version.split('.')[1] + '.0',
+  electron: 'v' + versionSegments[0] + '.' + versionSegments[1] + '.0',
   outputPath: path.join(__dirname, 'bin'),
   version: 'v2.15'
 }
