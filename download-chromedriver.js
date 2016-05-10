@@ -38,6 +38,7 @@ mkdirp(config.outputPath, function (error) {
 
   request.get({uri: fullUrl, encoding: null}, function (error, response, body) {
     if (error) return handleError(error)
+    if (response.statusCode !== 200) return handleError(Error('Non-200 response (' + response.statusCode + ')'))
     unzip(body, function (error) {
       if (error) return handleError(error)
       if (process.platform !== 'win32') {
