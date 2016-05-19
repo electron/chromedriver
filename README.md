@@ -4,7 +4,7 @@
 [![Windows Build Status](https://ci.appveyor.com/api/projects/status/wg4lulcyqid86d7f/branch/master?svg=true)](https://ci.appveyor.com/project/kevinsawicki/electron-chromedriver/branch/master)
 <br>
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
-[![devDependencies:?](https://img.shields.io/david/kevinsawicki/electron-chromedriver.svg)](https://david-dm.org/kevinsawicki/electron-chromedriver)
+[![devDependencies:?](https://img.shields.io/david/electron/chromedriver.svg)](https://david-dm.org/electron/chromedriver)
 <br>
 [![license:mit](https://img.shields.io/badge/license-mit-blue.svg)](https://opensource.org/licenses/MIT)
 [![npm:](https://img.shields.io/npm/v/electron-chromedriver.svg)](https://www.npmjs.com/packages/electron-chromedriver)
