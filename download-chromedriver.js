@@ -11,7 +11,7 @@ var config = {
   // Sync minor version of package to minor version of Electron release
   electron: 'v' + versionSegments[0] + '.' + versionSegments[1] + '.0',
   outputPath: path.join(__dirname, 'bin'),
-  version: 'v2.15'
+  version: 'v2.21'
 }
 
 function handleError (error) {
