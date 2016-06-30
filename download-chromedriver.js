@@ -40,7 +40,7 @@ mkdirp(config.outputPath, function (error) {
   if (error) return handleError(fullUrl, error)
 
   request.get({uri: fullUrl, encoding: null}, function (error, response, body) {
-    if (error) return handleError(error)
+    if (error) return handleError(fullUrl, error)
     if (response.statusCode !== 200) return handleError(fullUrl, Error('Non-200 response (' + response.statusCode + ')'))
     unzip(body, function (error) {
       if (error) return handleError(fullUrl, error)
