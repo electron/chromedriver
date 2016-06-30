@@ -5,9 +5,9 @@ var path = require('path')
 var request = require('request')
 
 var versionSegments = require('./package').version.split('.')
-var baseUrl = process.env.NPM_CONFIG_ELECTRON_MIRROR
-  || process.env.ELECTRON_MIRROR
-  || 'https://github.com/electron/electron/releases/download/v'
+var baseUrl = process.env.NPM_CONFIG_ELECTRON_MIRROR ||
+  process.env.ELECTRON_MIRROR ||
+  'https://github.com/electron/electron/releases/download/v'
 
 var config = {
   baseUrl: baseUrl,
@@ -45,7 +45,7 @@ mkdirp(config.outputPath, function (error) {
     unzip(body, function (error) {
       if (error) return handleError(fullUrl, error)
       if (process.platform !== 'win32') {
-        fs.chmod(path.join(__dirname, 'bin', 'chromedriver'), '755', function(error) {
+        fs.chmod(path.join(__dirname, 'bin', 'chromedriver'), '755', function (error) {
           if (error) return handleError(fullUrl, error)
         })
       }
