@@ -25,3 +25,17 @@ This library is used by [spectron](https://github.com/electron/spectron).
 npm install --save-dev electron-chromedriver
 chromedriver -h
 ```
+
+## Custom Mirror
+
+You can set the `ELECTRON_MIRROR` or [`NPM_CONFIG_ELECTRON_MIRROR`](https://docs.npmjs.com/misc/config#environment-variables)
+environment variables to use a custom base URL for grabbing ChromeDriver zips.
+
+```sh
+# Electron mirror for China
+ELECTRON_MIRROR="https://npm.taobao.org/mirrors/electron/"
+
+# Local mirror
+# Example of requested URL: http://localhost:8080/1.2.0/chromedriver-v2.21-darwin-x64.zip
+ELECTRON_MIRROR="http://localhost:8080/"
+```
