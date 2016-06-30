@@ -45,7 +45,9 @@ mkdirp(config.outputPath, function (error) {
     unzip(body, function (error) {
       if (error) return handleError(fullUrl, error)
       if (process.platform !== 'win32') {
-        fs.chmod(path.join(__dirname, 'bin', 'chromedriver'), '755', handleError)
+        fs.chmod(path.join(__dirname, 'bin', 'chromedriver'), '755', function(error) {
+          if (error) return handleError(fullUrl, error)
+        })
       }
     })
   })
