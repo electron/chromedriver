@@ -6,7 +6,9 @@ var request = require('request')
 
 var versionSegments = require('./package').version.split('.')
 var baseUrl = process.env.NPM_CONFIG_ELECTRON_MIRROR ||
+  process.env.npm_config_electron_mirror ||
   process.env.ELECTRON_MIRROR ||
+  process.env.electron_mirror ||
   'https://github.com/electron/electron/releases/download/v'
 
 var config = {
