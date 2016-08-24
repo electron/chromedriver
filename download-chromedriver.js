@@ -11,12 +11,18 @@ var baseUrl = process.env.NPM_CONFIG_ELECTRON_MIRROR ||
   process.env.electron_mirror ||
   'https://github.com/electron/electron/releases/download/v'
 
+var proxy = process.env.NPM_CONFIG_HTTPS_PROXY ||
+  process.env.npm_config_https_proxy ||
+  process.env.NPM_CONFIG_PROXY ||
+  process.env.npm_config_proxy
+
 var config = {
   baseUrl: baseUrl,
   // Sync minor version of package to minor version of Electron release
   electron: versionSegments[0] + '.' + versionSegments[1] + '.0',
   outputPath: path.join(__dirname, 'bin'),
-  version: 'v2.21'
+  version: 'v2.21',
+  proxy: proxy
 }
 
 function handleError (url, error) {
@@ -41,7 +47,7 @@ mkdirp(config.outputPath, function (error) {
 
   if (error) return handleError(fullUrl, error)
 
-  request.get({uri: fullUrl, encoding: null}, function (error, response, body) {
+  request.get({uri: fullUrl, encoding: null, proxy: config.proxy}, function (error, response, body) {
     if (error) return handleError(fullUrl, error)
     if (response.statusCode !== 200) return handleError(fullUrl, Error('Non-200 response (' + response.statusCode + ')'))
     unzip(body, function (error) {
