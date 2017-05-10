@@ -13,8 +13,8 @@
   "author": "Kevin Sawicki",
   "license": "MIT",
   "dependencies": {
-    "electron-download": "^3.1.0",
-    "extract-zip": "^1.6.0"
+    "electron-download": "^4.1.0",
+    "extract-zip": "^1.6.5"
   },
   "devDependencies": {
     "mocha": "^2.3.3",
