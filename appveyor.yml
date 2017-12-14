@@ -7,7 +7,7 @@ branches:
     - master
 
 environment:
-  nodejs_version: "4.2.1"
+  nodejs_version: "6"
 
 cache:
   - node_modules -> package.json
