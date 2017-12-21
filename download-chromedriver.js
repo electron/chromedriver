@@ -30,7 +30,7 @@ function processDownload (err, zipPath) {
   if (err != null) throw err
   extractZip(zipPath, {dir: path.join(__dirname, 'bin')}, function (error) {
     if (error != null) throw error
-    console.log('successfully dowloaded and extracted!')
+    console.log('successfully downloaded and extracted!')
     if (process.platform !== 'win32') {
       fs.chmod(path.join(__dirname, 'bin', 'chromedriver'), '755', function (error) {
         if (error != null) throw error
