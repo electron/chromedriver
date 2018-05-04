@@ -20,7 +20,7 @@ describe('chromedriver binary', function () {
     chromeDriver.stderr.on('data', function (data) { output += data })
 
     chromeDriver.on('close', function () {
-      assert.equal(output.indexOf('ChromeDriver 2.29'), 0, 'Unpexected version: ' + output)
+      assert.equal(output.indexOf('ChromeDriver 2.30'), 0, 'Unpexected version: ' + output)
     })
 
     chromeDriver.on('error', done)
