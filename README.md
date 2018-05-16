@@ -8,7 +8,7 @@
 [![devDependencies:?](https://img.shields.io/david/electron/chromedriver.svg)](https://david-dm.org/electron/chromedriver)
 <br>
 [![license:mit](https://img.shields.io/badge/license-mit-blue.svg)](https://opensource.org/licenses/MIT)
-[![npm:](https://img.shields.io/npm/v/electron-chromedriver.svg)](https://www.npmjs.com/packages/electron-chromedriver)
+[![npm:](https://img.shields.io/npm/v/electron-chromedriver.svg)](https://www.npmjs.com/package/electron-chromedriver)
 [![dependencies:?](https://img.shields.io/npm/dm/electron-chromedriver.svg)](https://www.npmjs.com/packages/electron-chromedriver)
 
 Simple node module to download the [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver)
