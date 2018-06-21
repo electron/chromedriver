@@ -1,7 +1,6 @@
 # Electron ChromeDriver
 
-[![Linux Build Status](https://circleci.com/gh/electron/chromedriver/tree/master.svg?style=shield)](https://circleci.com/gh/electron/chromedriver/tree/master)
-[![Mac Build Status](https://mac-ci.electronjs.org/buildStatus/icon?job=Electron%20org/chromedriver/master)](https://mac-ci.electronjs.org/blue/organizations/jenkins/Electron%20org%2Fchromedriver/activity?branch=master)
+[![Linux and Mac Build Status](https://circleci.com/gh/electron/chromedriver/tree/master.svg?style=shield)](https://circleci.com/gh/electron/chromedriver/tree/master)
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/43safb37jdlaeviw/branch/master?svg=true)](https://ci.appveyor.com/project/electron-bot/chromedriver/branch/master)
 <br>
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
@@ -14,9 +13,9 @@
 Simple node module to download the [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver)
 version for [Electron](http://electron.atom.io).
 
-This minor version of this library tracks the minor version of the Electron
-versions released. So if you are using Electron `1.0.x` you would want to use
-an `electron-chromedriver` dependency of `~1.0.0` in your `package.json` file.
+The major version of this library tracks the major version of the Electron
+versions released. So if you are using Electron `2.0.x` you would want to use
+an `electron-chromedriver` dependency of `~2.0.0` in your `package.json` file.
 
 This library is used by [spectron](https://github.com/electron/spectron).
 

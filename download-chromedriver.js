@@ -2,18 +2,7 @@ var fs = require('fs')
 var path = require('path')
 var electronDownload = require('electron-download')
 var extractZip = require('extract-zip')
-
 var versionToDownload = require('./package').version
-
-download(versionToDownload, function (err, zipPath) {
-  if (err) {
-    var versionSegments = versionToDownload.split('.')
-    var baseVersion = versionSegments[0] + '.' + versionSegments[1] + '.0'
-    download(baseVersion, processDownload)
-  } else {
-    processDownload(err, zipPath)
-  }
-})
 
 function download (version, callback) {
   electronDownload({
@@ -30,7 +19,6 @@ function processDownload (err, zipPath) {
   if (err != null) throw err
   extractZip(zipPath, {dir: path.join(__dirname, 'bin')}, function (error) {
     if (error != null) throw error
-    console.log('successfully downloaded and extracted!')
     if (process.platform !== 'win32') {
       fs.chmod(path.join(__dirname, 'bin', 'chromedriver'), '755', function (error) {
         if (error != null) throw error
@@ -38,3 +26,13 @@ function processDownload (err, zipPath) {
     }
   })
 }
+
+download(versionToDownload, function (err, zipPath) {
+  if (err) {
+    var versionSegments = versionToDownload.split('.')
+    var baseVersion = versionSegments[0] + '.' + versionSegments[1] + '.0'
+    download(baseVersion, processDownload)
+  } else {
+    processDownload(err, zipPath)
+  }
+})
