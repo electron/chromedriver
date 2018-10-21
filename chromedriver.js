@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 
-var ChildProcess = require('child_process')
-var path = require('path')
+const ChildProcess = require('child_process')
+const path = require('path')
 
-var command = path.join(__dirname, 'bin', 'chromedriver')
-var args = process.argv.slice(2)
-var options = {
+const command = path.join(__dirname, 'bin', 'chromedriver')
+const args = process.argv.slice(2)
+const options = {
   cwd: process.cwd(),
   env: process.env,
   stdio: 'inherit'
 }
 
-var chromeDriverProcess = ChildProcess.spawn(command, args, options)
+const chromeDriverProcess = ChildProcess.spawn(command, args, options)
 
 chromeDriverProcess.on('close', function (code) {
   if (code !== 0) {
@@ -23,11 +23,10 @@ chromeDriverProcess.on('error', function (error) {
   throw error
 })
 
-var killChromeDriver = function () {
+const killChromeDriver = () => {
   try {
     chromeDriverProcess.kill()
-  } catch (ignored) {
-  }
+  } catch (ignored) {}
 }
 
 process.on('exit', killChromeDriver)
