@@ -1,29 +1,29 @@
-var assert = require('assert')
-var ChildProcess = require('child_process')
-var path = require('path')
+const assert = require('assert')
+const ChildProcess = require('child_process')
+const path = require('path')
 
-var describe = global.describe
-var it = global.it
+const describe = global.describe
+const it = global.it
 
 describe('chromedriver binary', function () {
   this.timeout(10000)
 
-  it('launches successfully', function (done) {
-    var args = [
+  it('launches successfully', done => {
+    const args = [
       path.join(__dirname, '..', 'chromedriver.js'),
       '-v'
     ]
-    var chromeDriver = ChildProcess.spawn(process.execPath, args)
+    const chromeDriver = ChildProcess.spawn(process.execPath, args)
 
-    var output = ''
-    chromeDriver.stdout.on('data', function (data) { output += data })
-    chromeDriver.stderr.on('data', function (data) { output += data })
+    let output = ''
+    chromeDriver.stdout.on('data', data => output += data)
+    chromeDriver.stderr.on('data', data => output += data)
 
-    chromeDriver.on('close', function () {
-      assert.equal(output.indexOf('ChromeDriver 2.36'), 0, 'Unpexected version: ' + output)
+    chromeDriver.on('close', () => {
+      assert.equal(output.indexOf('ChromeDriver 2.36'), 0, `Unexpected version: ${output}`)
     })
 
     chromeDriver.on('error', done)
-    chromeDriver.on('close', function () { done() })
+    chromeDriver.on('close', () => done())
   })
 })

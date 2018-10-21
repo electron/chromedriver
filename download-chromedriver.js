@@ -1,12 +1,12 @@
-var fs = require('fs')
-var path = require('path')
-var electronDownload = require('electron-download')
-var extractZip = require('extract-zip')
-var versionToDownload = require('./package').version
+const fs = require('fs')
+const path = require('path')
+const electronDownload = require('electron-download')
+const extractZip = require('extract-zip')
+const versionToDownload = require('./package').version
 
 function download (version, callback) {
   electronDownload({
-    version: version,
+    version,
     chromedriver: true,
     platform: process.env.npm_config_platform,
     arch: process.env.npm_config_arch,
@@ -17,20 +17,20 @@ function download (version, callback) {
 
 function processDownload (err, zipPath) {
   if (err != null) throw err
-  extractZip(zipPath, {dir: path.join(__dirname, 'bin')}, function (error) {
+  extractZip(zipPath, {dir: path.join(__dirname, 'bin')}, error => {
     if (error != null) throw error
     if (process.platform !== 'win32') {
-      fs.chmod(path.join(__dirname, 'bin', 'chromedriver'), '755', function (error) {
+      fs.chmod(path.join(__dirname, 'bin', 'chromedriver'), '755', error => {
         if (error != null) throw error
       })
     }
   })
 }
 
-download(versionToDownload, function (err, zipPath) {
+download(versionToDownload, (err, zipPath) => {
   if (err) {
-    var versionSegments = versionToDownload.split('.')
-    var baseVersion = versionSegments[0] + '.' + versionSegments[1] + '.0'
+    const parts = versionToDownload.split('.')
+    const baseVersion = `${parts[0]}.${parts[1]}.0`
     download(baseVersion, processDownload)
   } else {
     processDownload(err, zipPath)
