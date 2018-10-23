@@ -24,6 +24,7 @@ describe('chromedriver binary', function () {
       if (version.startsWith('3')) {
         assert.equal(output.indexOf('ChromeDriver 2.36'), 0, `Unexpected version: ${output}`)
       } else if (version.startsWith('4')) {
+        // see src/chrome/test/chromedriver/embed_version_in_cpp.py
         assert.equal(output.indexOf('ChromeDriver 69.0.3497.106'), 0, `Unexpected version: ${output}`)
       }
     })
