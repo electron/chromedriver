@@ -1,6 +1,7 @@
 const assert = require('assert')
 const ChildProcess = require('child_process')
 const path = require('path')
+const { version } = require('../package')
 
 const describe = global.describe
 const it = global.it
@@ -20,7 +21,11 @@ describe('chromedriver binary', function () {
     chromeDriver.stderr.on('data', data => output += data)
 
     chromeDriver.on('close', () => {
-      assert.equal(output.indexOf('ChromeDriver 2.36'), 0, `Unexpected version: ${output}`)
+      if (version.startsWith('3')) {
+        assert.equal(output.indexOf('ChromeDriver 2.36'), 0, `Unexpected version: ${output}`)
+      } else if (version.startsWith('4')) {
+        assert.equal(output.indexOf('ChromeDriver 69.0.3497.106'), 0, `Unexpected version: ${output}`)
+      }
     })
 
     chromeDriver.on('error', done)
