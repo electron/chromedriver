@@ -17,15 +17,15 @@ describe('chromedriver binary', function () {
     const chromeDriver = ChildProcess.spawn(process.execPath, args)
 
     let output = ''
-    chromeDriver.stdout.on('data', data => output += data)
-    chromeDriver.stderr.on('data', data => output += data)
+    chromeDriver.stdout.on('data', function (data) { output += data })
+    chromeDriver.stderr.on('data', function (data) { output += data })
 
     chromeDriver.on('close', () => {
       if (version.startsWith('3')) {
-        assert.equal(output.indexOf('ChromeDriver 2.36'), 0, `Unexpected version: ${output}`)
+        assert.strictEqual(output.indexOf('ChromeDriver 2.36'), 0, `Unexpected version: ${output}`)
       } else if (version.startsWith('4')) {
         // see src/chrome/test/chromedriver/embed_version_in_cpp.py
-        assert.equal(output.indexOf('ChromeDriver 69.0.3497.106'), 0, `Unexpected version: ${output}`)
+        assert.strictEqual(output.indexOf('ChromeDriver 69.0.3497.106'), 0, `Unexpected version: ${output}`)
       }
     })
 
