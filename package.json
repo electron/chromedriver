@@ -1,6 +1,6 @@
 {
   "name": "electron-chromedriver",
-  "version": "5.0.1",
+  "version": "6.0.0-beta.3",
   "description": "Electron ChromeDriver",
   "repository": "https://github.com/electron/chromedriver",
   "bin": {
