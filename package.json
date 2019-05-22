@@ -1,6 +1,6 @@
 {
   "name": "electron-chromedriver",
-  "version": "5.0.0-beta.1",
+  "version": "4.2.0",
   "description": "Electron ChromeDriver",
   "repository": "https://github.com/electron/chromedriver",
   "bin": {
@@ -13,8 +13,8 @@
   "author": "Kevin Sawicki",
   "license": "MIT",
   "dependencies": {
-    "electron-download": "^4.1.0",
-    "extract-zip": "^1.6.5"
+    "electron-download": "^4.1.1",
+    "extract-zip": "^1.6.7"
   },
   "devDependencies": {
     "mocha": "^2.3.3",
