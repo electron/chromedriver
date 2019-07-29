@@ -10,7 +10,7 @@ const versions = {
   3: 'ChromeDriver 2.36',
   4: 'ChromeDriver 2.40.613160',
   5: 'ChromeDriver 2.45',
-  6: 'ChromeDriver 76.0.3783.1'
+  6: 'ChromeDriver 76.0.3809.88'
 }
 
 describe('chromedriver binary', function () {
