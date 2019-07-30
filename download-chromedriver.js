@@ -17,7 +17,7 @@ function download (version, callback) {
 
 function processDownload (err, zipPath) {
   if (err != null) throw err
-  extractZip(zipPath, {dir: path.join(__dirname, 'bin')}, error => {
+  extractZip(zipPath, { dir: path.join(__dirname, 'bin') }, error => {
     if (error != null) throw error
     if (process.platform !== 'win32') {
       fs.chmod(path.join(__dirname, 'bin', 'chromedriver'), '755', error => {

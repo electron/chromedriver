@@ -24,14 +24,14 @@ describe('chromedriver binary', function () {
     const chromeDriver = ChildProcess.spawn(process.execPath, args)
 
     let output = ''
-    chromeDriver.stdout.on('data', data => output += data)
-    chromeDriver.stderr.on('data', data => output += data)
+    chromeDriver.stdout.on('data', data => { output += data })
+    chromeDriver.stderr.on('data', data => { output += data })
 
     chromeDriver.on('close', () => {
       for (const v in versions) {
         if (version.startsWith(v)) {
           const idx = output.indexOf(versions[v])
-          assert.equal(idx, 0, `Unexpected version: ${output}`)
+          assert.strictEqual(idx, 0, `Unexpected version: ${output}`)
         }
       }
     })
