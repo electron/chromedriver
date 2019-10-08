@@ -13,9 +13,11 @@
 Simple node module to download the [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver)
 version for [Electron](http://electron.atom.io).
 
-The major version of this library tracks the major version of the Electron
-versions released. So if you are using Electron `2.0.x` you would want to use
-an `electron-chromedriver` dependency of `~2.0.0` in your `package.json` file.
+By default, this library will use your `electron` version to figure out which
+version of Chromedriver to download. If that fails, the major version of this
+library tracks the major version of the Electron versions released. So if you
+are using Electron `2.0.x` you would want to use an `electron-chromedriver`
+dependency of `~2.0.0` in your `package.json` file.
 
 This library is used by [spectron](https://github.com/electron/spectron).
 

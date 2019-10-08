@@ -2,7 +2,15 @@ const fs = require('fs')
 const path = require('path')
 const electronDownload = require('electron-download')
 const extractZip = require('extract-zip')
-const versionToDownload = require('./package').version
+
+function getVersion () {
+  const pack = require('./package') || {}
+  const dependencies = pack.dependencies
+  const devDependencies = pack.devDependencies
+  const allDependencies = { ...dependencies, ...devDependencies }
+
+  return allDependencies['electron'] || pack.version
+}
 
 function download (version, callback) {
   electronDownload({
@@ -26,6 +34,8 @@ function processDownload (err, zipPath) {
     }
   })
 }
+
+const versionToDownload = getVersion()
 
 download(versionToDownload, (err, zipPath) => {
   if (err) {
