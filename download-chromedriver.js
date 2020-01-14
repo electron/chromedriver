@@ -32,10 +32,10 @@ const parts = primaryVersion.split('.')
 let fallbackVersion = `${parts[0]}.${parts[1]}.0`
 
 const versionEnvVar = (
-  process.env[`NPM_CONFIG_ELECTRON_CHROMEDRIVER_CUSTOM_VERSION`] ||
-  process.env[`npm_config_electron_chromedriver_custom_version`] ||
-  process.env[`npm_package_config_electron_chromedriver_custom_version`] ||
-  process.env[`ELECTRON_CHROMEDRIVER_CUSTOM_VERSION}`]
+  process.env['NPM_CONFIG_ELECTRON_CHROMEDRIVER_CUSTOM_VERSION'] ||
+  process.env['npm_config_electron_chromedriver_custom_version'] ||
+  process.env['npm_package_config_electron_chromedriver_custom_version'] ||
+  process.env['ELECTRON_CHROMEDRIVER_CUSTOM_VERSION']
 )
 
 if (versionEnvVar != null) {
