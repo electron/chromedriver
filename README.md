@@ -39,3 +39,26 @@ ELECTRON_MIRROR="https://npm.taobao.org/mirrors/electron/"
 # Example of requested URL: http://localhost:8080/1.2.0/chromedriver-v2.21-darwin-x64.zip
 ELECTRON_MIRROR="http://localhost:8080/"
 ```
+
+The other environment variables supported by [electron-download](https://www.npmjs.com/package/electron-download)
+(`ELECTRON_CUSTOM_DIR`, `ELECTRON_CUSTOM_FILENAME`) are similarly supported.
+
+## Custom Version
+
+By default, this library will download the version of ChromeDriver matching the
+version of this library, with fallback to patch version 0 of the same major and
+minor version.
+
+You can download a specific version of ChromeDriver instead by setting either an
+environment variable or a `.npmrc` config value named `ELECTRON_CHROMEDRIVER_CUSTOM_VERSION`.
+
+You can use this on its own or in combination with the Custom Mirror options.
+`ELECTRON_CUSTOM_DIR` and `ELECTRON_CUSTOM_FILENAME` will take precedence over
+the dir/filename that would be implied by `ELECTRON_CHROMEDRIVER_CUSTOM_VERSION`.
+
+```sh
+# Example of requested URL: https://example.com/builds/7.1.8/no-media-codecs/chromedriver-v7.1.8-win32-x64.zip
+ELECTRON_MIRROR="https://example.com/builds/"
+ELECTRON_CUSTOM_DIR="7.1.8/no-media-codecs"
+ELECTRON_CHROMEDRIVER_CUSTOM_VERSION="7.1.8"
+```
