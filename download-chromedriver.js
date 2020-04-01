@@ -1,4 +1,4 @@
-const fs = require('fs')
+const { promises: fs } = require('fs')
 const path = require('path')
 const { downloadArtifact } = require('@electron/get')
 const extractZip = require('extract-zip')
@@ -15,21 +15,14 @@ function download (version) {
   })
 }
 
-function processDownload (zipPath) {
-  extractZip(zipPath, { dir: path.join(__dirname, 'bin') }, error => {
-    if (error != null) throw error
-    if (process.platform !== 'win32') {
-      fs.chmod(path.join(__dirname, 'bin', 'chromedriver'), '755', error => {
-        if (error != null) throw error
-      })
-    }
-  })
-}
-
 async function attemptDownload (version) {
   try {
+    const targetFolder = path.join(__dirname, 'bin')
     const zipPath = await download(version)
-    processDownload(zipPath)
+    await extractZip(zipPath, { dir: targetFolder })
+    if (process.platform !== 'win32') {
+      await fs.chmod(path.join(targetFolder, 'chromedriver'), 0o755)
+    }
   } catch (err) {
     // attempt to fall back to semver minor
     const parts = version.split('.')
