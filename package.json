@@ -11,6 +11,9 @@
     "lint": "standard --fix",
     "test": "standard && mocha"
   },
+  "engines" : { 
+    "node" : ">=10.12.0" 
+  },
   "author": "Kevin Sawicki",
   "license": "MIT",
   "dependencies": {
