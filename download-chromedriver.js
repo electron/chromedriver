@@ -20,7 +20,8 @@ async function attemptDownload (version) {
     const targetFolder = path.join(__dirname, 'bin')
     const zipPath = await download(version)
     await extractZip(zipPath, { dir: targetFolder })
-    if (process.platform !== 'win32') {
+    const platform = process.env.npm_config_platform || process.platform;
+    if (platform !== 'win32') {
       await fs.chmod(path.join(targetFolder, 'chromedriver'), 0o755)
     }
   } catch (err) {
