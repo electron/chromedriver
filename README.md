@@ -39,3 +39,7 @@ ELECTRON_MIRROR="https://npm.taobao.org/mirrors/electron/"
 # Example of requested URL: http://localhost:8080/1.2.0/chromedriver-v2.21-darwin-x64.zip
 ELECTRON_MIRROR="http://localhost:8080/"
 ```
+
+## Overriding the version downloaded
+
+The version downloaded can be overriden by setting the `ELECTRON_CUSTOM_VERSION` environment variable.

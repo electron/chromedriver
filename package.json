@@ -1,6 +1,6 @@
 {
   "name": "electron-chromedriver",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "description": "Electron ChromeDriver",
   "repository": "https://github.com/electron/chromedriver",
   "bin": {
@@ -11,17 +11,17 @@
     "lint": "standard --fix",
     "test": "standard && mocha"
   },
-  "engines" : { 
-    "node" : ">=10.12.0" 
+  "engines": {
+    "node": ">=10.12.0"
   },
   "author": "Kevin Sawicki",
   "license": "MIT",
   "dependencies": {
-    "@electron/get": "^1.9.0",
+    "@electron/get": "^1.12.2",
     "extract-zip": "^2.0.0"
   },
   "devDependencies": {
-    "mocha": "^6.2.0",
+    "mocha": "^7.1.2",
     "standard": "^13.1.0"
   }
 }
