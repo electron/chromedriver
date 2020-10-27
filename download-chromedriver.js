@@ -37,7 +37,7 @@ async function makeRequest (requestOptions, parseResponse) {
 
 
 async function downloadArtifact (name, buildNum, dest) {
-  const chromeDriverUrl = 'https://chromedriver.storage.googleapis.com/86.0.4240.22/chromedriver_linux64.zip';
+  const chromeDriverUrl = 'https://chromedriver.storage.googleapis.com/86.0.4240.22/chromedriver_mac64.zip';
   const artifacts = await makeRequest({
     method: 'GET',
     url: chromeDriverUrl,
