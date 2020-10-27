@@ -3,6 +3,7 @@ const path = require('path')
 // const { downloadArtifact } = require('@electron/get')
 const extractZip = require('extract-zip')
 const versionToDownload = require('./package').version
+const args = require('minimist')(process.argv.slice(2));
 
 
 async function makeRequest (requestOptions, parseResponse) {
