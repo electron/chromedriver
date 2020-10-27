@@ -4,6 +4,7 @@ const path = require('path')
 const extractZip = require('extract-zip')
 const versionToDownload = require('./package').version
 const args = require('minimist')(process.argv.slice(2));
+const request = require('request');
 
 
 async function makeRequest (requestOptions, parseResponse) {
