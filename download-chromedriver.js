@@ -5,6 +5,36 @@ const extractZip = require('extract-zip')
 const versionToDownload = require('./package').version
 
 
+async function makeRequest (requestOptions, parseResponse) {
+  return new Promise((resolve, reject) => {
+    request(requestOptions, (err, res, body) => {
+      if (!err && res.statusCode >= 200 && res.statusCode < 300) {
+        if (parseResponse) {
+          const build = JSON.parse(body);
+          resolve(build);
+        } else {
+          resolve(body);
+        }
+      } else {
+        if (args.verbose) {
+          console.error('Error occurred while requesting:', requestOptions.url);
+          if (parseResponse) {
+            try {
+              console.log('Error: ', `(status ${res.statusCode})`, err || JSON.parse(res.body), requestOptions);
+            } catch (err) {
+              console.log('Error: ', `(status ${res.statusCode})`, err || res.body, requestOptions);
+            }
+          } else {
+            console.log('Error: ', `(status ${res.statusCode})`, err || res.body, requestOptions);
+          }
+        }
+        reject(err);
+      }
+    });
+  });
+}
+
+
 async function downloadArtifact (name, buildNum, dest) {
   const chromeDriverUrl = 'https://chromedriver.storage.googleapis.com/86.0.4240.22/chromedriver_linux64.zip';
   const artifacts = await makeRequest({
