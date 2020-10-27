@@ -1,18 +1,51 @@
 const { promises: fs } = require('fs')
 const path = require('path')
-const { downloadArtifact } = require('@electron/get')
+// const { downloadArtifact } = require('@electron/get')
 const extractZip = require('extract-zip')
 const versionToDownload = require('./package').version
 
+
+async function downloadArtifact (name, buildNum, dest) {
+  const chromeDriverUrl = 'https://chromedriver.storage.googleapis.com/86.0.4240.22/chromedriver_linux64.zip';
+  const artifacts = await makeRequest({
+    method: 'GET',
+    url: chromeDriverUrl,
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
+    }
+  }, true).catch(err => {
+    if (args.verbose) {
+      console.log('Error calling chrome driver service:', err);
+    } else {
+      console.error('Error calling chrome driver service to get artifact details');
+    }
+  });
+  const artifactToDownload = artifacts.find(artifact => {
+    return (artifact.path === name);
+  });
+  if (!artifactToDownload) {
+    console.log(`Could not find artifact called ${name} to download for build #${buildNum}.`);
+    process.exit(1);
+  } else {
+    console.log(`Downloading ${artifactToDownload.url}.`);
+    let downloadError = false;
+    await downloadWithRetry(artifactToDownload.url, dest).catch(err => {
+      if (args.verbose) {
+        console.log(`${artifactToDownload.url} could not be successfully downloaded.  Error was:`, err);
+      } else {
+        console.log(`${artifactToDownload.url} could not be successfully downloaded.`);
+      }
+      downloadError = true;
+    });
+    if (!downloadError) {
+      console.log(`Successfully downloaded ${name}.`);
+    }
+  }
+}
+
 function download (version) {
-  return downloadArtifact({
-    version,
-    artifactName: 'chromedriver',
-    platform: process.env.npm_config_platform,
-    arch: process.env.npm_config_arch,
-    rejectUnauthorized: process.env.npm_config_strict_ssl === 'true',
-    quiet: ['info', 'verbose', 'silly', 'http'].indexOf(process.env.npm_config_loglevel) === -1
-  })
+  return downloadArtifact({ version, artifactName: 'chromedriver', platform: process.env.npm_config_platform, arch: process.env.npm_config_arch, rejectUnauthorized: process.env.npm_config_strict_ssl === 'true', quiet: ['info', 'verbose', 'silly', 'http'].indexOf(process.env.npm_config_loglevel) === -1})
 }
 
 async function attemptDownload (version) {
