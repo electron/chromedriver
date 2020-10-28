@@ -12,6 +12,7 @@ async function makeRequest (requestOptions, parseResponse) {
     request(requestOptions, (err, res, body) => {
       if (!err && res.statusCode >= 200 && res.statusCode < 300) {
         if (parseResponse) {
+          console.log(body)
           const build = JSON.parse(body);
           resolve(build);
         } else {
