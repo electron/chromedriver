@@ -18,7 +18,6 @@ function download (version) {
 async function attemptDownload (version) {
   console.log('does it get here. attempt download function')
   try {
-    throw err;
     const targetFolder = path.join(__dirname, 'bin')
     const zipPath = await download(version)
     console.log('zipPath is: ')
