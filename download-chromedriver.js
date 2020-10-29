@@ -23,7 +23,7 @@ async function attemptDownload (version) {
     const targetFolder = path.join(__dirname, 'bin')
     console.log('target folder is: ')
     console.log(targetFolder)
-    const zipPath = 'https://chromedriver.storage.googleapis.com/86.0.4240.22/chromedriver_mac64.zip'
+    const zipPath = await download(version)
     console.log('zipPath is: ')
     console.log(zipPath)
     await extractZip(zipPath, { dir: targetFolder })
