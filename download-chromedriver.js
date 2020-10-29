@@ -5,6 +5,7 @@ const extractZip = require('extract-zip')
 const versionToDownload = require('./package').version
 
 function download (version) {
+  console.log('in the download function')
   return downloadArtifact({
     version,
     artifactName: 'chromedriver',
@@ -18,7 +19,10 @@ function download (version) {
 async function attemptDownload (version) {
   console.log('does it get here. attempt download function')
   try {
+    console.log('in try block')
     const targetFolder = path.join(__dirname, 'bin')
+    console.log('target folder is: ')
+    console.log(targetFolder)
     const zipPath = await download(version)
     console.log('zipPath is: ')
     console.log(zipPath)
