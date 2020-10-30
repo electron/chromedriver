@@ -24,7 +24,7 @@ async function attemptDownload (version) {
     const targetFolder = path.join(__dirname, 'bin')
     console.log('target folder is: ')
     console.log(targetFolder)
-    const zipPath = path.join(os.homedir(), '/Library/Caches/electron/chromedriver-v11.0.0-beta.18-darwin-x64.zip')
+    const zipPath = path.join(os.homedir(), '/Library/Caches/electron/chromedriver-v10.1.5-darwin-x64.zip')
     console.log('zipPath is: ')
     console.log(zipPath)
     await extractZip(zipPath, { dir: targetFolder })
