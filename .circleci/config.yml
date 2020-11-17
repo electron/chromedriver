@@ -40,7 +40,7 @@ jobs:
 
   install-test-osx:
     macos:
-        xcode: "9.0"
+        xcode: "10.0"
     steps:
       - checkout
       # Download and cache dependencies
