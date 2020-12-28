@@ -8,6 +8,8 @@ function download (version) {
   return downloadArtifact({
     version,
     artifactName: 'chromedriver',
+    force: process.env.force_no_cache === 'true',
+    cacheRoot: process.env.electron_config_cache,
     platform: process.env.npm_config_platform,
     arch: process.env.npm_config_arch,
     rejectUnauthorized: process.env.npm_config_strict_ssl === 'true',
