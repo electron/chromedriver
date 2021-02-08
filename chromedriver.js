@@ -14,7 +14,7 @@ const options = {
 const chromeDriverProcess = ChildProcess.spawn(command, args, options)
 
 chromeDriverProcess.on('close', code => {
-  if (code !== 0) {
+  if (code !== null && code !== 0) {
     throw new Error(`Chromedriver exited with error code: ${code}`)
   }
 })
