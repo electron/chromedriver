@@ -1,7 +1,7 @@
 # Electron ChromeDriver
 
-[![Linux and Mac Build Status](https://circleci.com/gh/electron/chromedriver/tree/master.svg?style=shield)](https://circleci.com/gh/electron/chromedriver/tree/master)
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/43safb37jdlaeviw/branch/master?svg=true)](https://ci.appveyor.com/project/electron-bot/chromedriver/branch/master)
+[![Linux and Mac Build Status](https://circleci.com/gh/electron/chromedriver/tree/main.svg?style=shield)](https://circleci.com/gh/electron/chromedriver/tree/main)
+[![Windows Build status](https://ci.appveyor.com/api/projects/status/43safb37jdlaeviw/branch/main?svg=true)](https://ci.appveyor.com/project/electron-bot/chromedriver/branch/main)
 <br>
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
 [![devDependencies:?](https://img.shields.io/david/electron/chromedriver.svg)](https://david-dm.org/electron/chromedriver)

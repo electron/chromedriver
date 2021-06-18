@@ -4,7 +4,7 @@ skip_tags: true
 
 branches:
   only:
-    - master
+    - main
 
 environment:
   nodejs_version: "10"
