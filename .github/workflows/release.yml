@@ -7,6 +7,9 @@ on:
           description: 'version'
           required: true
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   main:
     runs-on: ubuntu-latest
@@ -30,5 +33,3 @@ jobs:
       - name: Create Release
         run: |
           gh release create ${{ github.event.inputs.version }} -t ${{ github.event.inputs.version }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
