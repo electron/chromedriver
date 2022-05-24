@@ -1,0 +1,35 @@
+name: Release For New Electron Version
+
+on:
+  workflow_dispatch:
+    inputs:
+        version:
+          description: 'version'
+          required: true
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set Git Credentials
+        run: |
+          git config user.name electron-bot
+          git config user.email electron@github.com
+      - name: Update Version
+        run: node script/update-version.js ${{ github.event.inputs.version }}
+      - name: Push Update Commit
+        run: |
+          git add .
+          git commit -m "chore: update version to ${{ github.event.inputs.version }}"
+          git push origin main
+      - name: Push New Tag
+        run: |
+          git tag ${{ github.event.inputs.version }}
+          git push origin ${{ github.event.inputs.version }}
+      - name: Create Release
+        run: |
+          gh release create ${{ github.event.inputs.version }} -t ${{ github.event.inputs.version }}
