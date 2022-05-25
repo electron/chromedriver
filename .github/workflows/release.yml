@@ -47,3 +47,8 @@ jobs:
       - name: Create Release
         run: |
           gh release create ${{ github.event.inputs.version }} -t ${{ github.event.inputs.version }}
+      - name: Publish to npm
+        run: npm publish
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
