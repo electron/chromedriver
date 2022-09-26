@@ -29,6 +29,15 @@ jobs:
     needs: run_tests
     steps:
       - uses: actions/checkout@v3
+      - name: Use Node.js v16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          registry-url: 'https://registry.npmjs.org'
+      - name: Check npm credentials
+        run: npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       - name: Set Git Credentials
         run: |
           git config user.name electron-bot
@@ -50,5 +59,4 @@ jobs:
       - name: Publish to npm
         run: npm publish
         env:
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
