@@ -21,7 +21,7 @@
     "extract-zip": "^2.0.0"
   },
   "devDependencies": {
-    "mocha": "^8.3.0",
+    "mocha": "^10.1.0",
     "standard": "^13.1.0"
   }
 }
