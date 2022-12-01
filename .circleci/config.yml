@@ -7,7 +7,7 @@ jobs:
   install-test-linux:
     docker:
       # specify the version you desire here
-      - image: circleci/node:10
+      - image: circleci/node:14-browsers
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -49,18 +49,6 @@ jobs:
           - v1-mac-dependencies-{{ checksum "package.json" }}
           # fallback to using the latest cache if no exact match is found
           - v1-mac-dependencies-
-
-      # Lock into Node.js version
-      - run:
-          name: Install Node.js
-          command: |
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm install v10.19.0
-            nvm alias default v10.19.0
-            echo 'export NVM_DIR=${HOME}/.nvm' >> $BASH_ENV	
-            echo "[ -s '${NVM_DIR}/nvm.sh' ] && . '${NVM_DIR}/nvm.sh'" >> $BASH_ENV
       - run: node --version
       - run: npm --version
       - run: npm install
