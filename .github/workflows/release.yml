@@ -18,10 +18,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
-      - name: Install Dependencies
-        run: npm i
       - name: Update Version
         run: node script/update-version.js ${{ github.event.inputs.version }}
+      - name: Install Dependencies
+        run: npm i
       - name: Run Tests
         run: npm test
   create_new_version:
