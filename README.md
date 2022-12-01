@@ -3,15 +3,14 @@
 [![Linux and Mac Build Status](https://circleci.com/gh/electron/chromedriver/tree/main.svg?style=shield)](https://circleci.com/gh/electron/chromedriver/tree/main)
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/43safb37jdlaeviw/branch/main?svg=true)](https://ci.appveyor.com/project/electron-bot/chromedriver/branch/main)
 <br>
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
-[![devDependencies:?](https://img.shields.io/david/electron/chromedriver.svg)](https://david-dm.org/electron/chromedriver)
-<br>
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 [![license:mit](https://img.shields.io/badge/license-mit-blue.svg)](https://opensource.org/licenses/MIT)
+<br>
 [![npm:](https://img.shields.io/npm/v/electron-chromedriver.svg)](https://www.npmjs.com/package/electron-chromedriver)
-[![dependencies:?](https://img.shields.io/npm/dm/electron-chromedriver.svg)](https://www.npmjs.com/packages/electron-chromedriver)
+[![dependencies:?](https://img.shields.io/npm/dm/electron-chromedriver.svg)](https://www.npmjs.com/package/electron-chromedriver)
 
-Simple node module to download the [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver)
-version for [Electron](http://electron.atom.io).
+Simple node module to download the [ChromeDriver](https://sites.google.com/corp/chromium.org/driver/)
+version for [Electron](https://electronjs.org).
 
 The major version of this library tracks the major version of the Electron
 versions released. So if you are using Electron `2.0.x` you would want to use
