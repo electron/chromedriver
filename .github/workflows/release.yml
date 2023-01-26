@@ -29,10 +29,10 @@ jobs:
     needs: run_tests
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js v16
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: lts/*
           registry-url: 'https://registry.npmjs.org'
       - name: Check npm credentials
         run: npm whoami
