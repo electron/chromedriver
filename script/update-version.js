@@ -11,7 +11,7 @@ async function updateVersion () {
   const version = normalizeVersion(process.argv[2])
   if (!versionFormat.test(version)) {
     console.error(`Unsupported version ${version} - only major, minor, and patch releases are currently supported`)
-    return;
+    return
   }
 
   const PJ_PATH = path.join(__dirname, '..', 'package.json')
