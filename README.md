@@ -1,12 +1,11 @@
 # Electron ChromeDriver
 
-[![Linux and Mac Build Status](https://circleci.com/gh/electron/chromedriver/tree/main.svg?style=shield)](https://circleci.com/gh/electron/chromedriver/tree/main)
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/43safb37jdlaeviw/branch/main?svg=true)](https://ci.appveyor.com/project/electron-bot/chromedriver/branch/main)
+[![CircleCI Status](https://circleci.com/gh/electron/chromedriver/tree/main.svg?style=shield)](https://circleci.com/gh/electron/chromedriver/tree/main)
+[![npm:](https://img.shields.io/npm/v/electron-chromedriver.svg)](https://www.npmjs.com/package/electron-chromedriver)
 <br>
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 [![license:mit](https://img.shields.io/badge/license-mit-blue.svg)](https://opensource.org/licenses/MIT)
 <br>
-[![npm:](https://img.shields.io/npm/v/electron-chromedriver.svg)](https://www.npmjs.com/package/electron-chromedriver)
 [![dependencies:?](https://img.shields.io/npm/dm/electron-chromedriver.svg)](https://www.npmjs.com/package/electron-chromedriver)
 
 Simple node module to download the [ChromeDriver](https://sites.google.com/corp/chromium.org/driver/)
