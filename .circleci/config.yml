@@ -6,10 +6,14 @@ orbs:
 
 commands:
   install:
+    parameters:
+      node-version:
+        description: Node.js version to install
+        type: string
     steps:
       - node/install:
-          node-version: "16.19.0"
-      - run: nvm use 16.19.0
+          node-version: << parameters.node-version >>
+      - run: nvm use << parameters.node-version >>
       - checkout
       - restore_cache:
           keys:
@@ -30,26 +34,59 @@ jobs:
   test-linux:
     docker:
       - image: cimg/base:stable
+    parameters:
+      node-version:
+        description: Node.js version to install
+        type: string
     steps:
-      - install
+      - install:
+          node-version: << parameters.node-version >>
       - test
   test-mac:
     macos:
       xcode: "13.3.0"
+    parameters:
+      node-version:
+        description: Node.js version to install
+        type: string
     steps:
-      - install
+      - install:
+          node-version: << parameters.node-version >>
       - test
   test-windows:
     executor:
       name: win/default
       shell: bash.exe
+    parameters:
+      node-version:
+        description: Node.js version to install
+        type: string
     steps:
-      - install
+      - install:
+          node-version: << parameters.node-version >>
       - test
 
 workflows:
   test_and_release:
     jobs:
-      - test-linux
-      - test-mac
-      - test-windows
+      - test-linux:
+          matrix:
+            parameters:
+              node-version:
+                - 18.14.0
+                - 16.19.0
+                - 14.19.0
+      - test-mac:
+          matrix:
+            parameters:
+              node-version:
+                - 18.14.0
+                - 16.19.0
+                - 14.19.0
+      - test-windows:
+          matrix:
+            parameters:
+              node-version:
+                - 18.14.0
+                - 16.19.0
+                - 14.19.0
