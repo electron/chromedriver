@@ -19,7 +19,20 @@ commands:
           keys:
             - v1-dependencies-{{ arch }}-{{ checksum "package-lock.json" }}
             - v1-dependencies-{{ arch }}
-      - run: npm install
+      - when:
+          condition: << pipeline.git.tag >>
+          steps:
+            - run:
+                name: Update Version
+                command: node script/update-version.js << pipeline.git.tag >>
+            - run: npm install
+      - unless:
+          condition: << pipeline.git.tag >>
+          steps:
+            - run:
+                command: npm install
+                environment:
+                  ELECTRON_CHROMEDRIVER_STABLE_FALLBACK: 1
       - save_cache:
           paths:
             - node_modules
@@ -65,6 +78,32 @@ jobs:
       - install:
           node-version: << parameters.node-version >>
       - test
+  release:
+    docker:
+      - image: cimg/node:18.14
+    steps:
+      - checkout
+      - run:
+          name: Update Version
+          command: node script/update-version.js << pipeline.git.tag >>
+      - run:
+          name: Install Dependencies
+          command: npm ci
+      - run:
+          name: Obtain Publishing Credentials
+          command: npx @continuous-auth/circleci-oidc-github-auth@1.0.4
+      - run:
+          name: Confirm Version Updated
+          command: node -e "if (require('./package.json').version === '0.0.0-development') process.exit(1)"
+      - run:
+          name: Set NPM Credentials
+          command: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > ~/.npmrc
+      - run:
+          name: Check NPM Credentials
+          command: npm whoami
+      - run:
+          name: CFA Publish
+          command: node script/publish.js
 
 workflows:
   test_and_release:
@@ -76,6 +115,9 @@ workflows:
                 - 18.14.0
                 - 16.19.0
                 - 14.19.0
+          filters:
+            tags:
+              only: /.*/
       - test-mac:
           matrix:
             parameters:
@@ -83,6 +125,9 @@ workflows:
                 - 18.14.0
                 - 16.19.0
                 - 14.19.0
+          filters:
+            tags:
+              only: /.*/
       - test-windows:
           matrix:
             parameters:
@@ -90,3 +135,23 @@ workflows:
                 - 18.14.0
                 - 16.19.0
                 - 14.19.0
+          filters:
+            tags:
+              only: /.*/
+      - release:
+          requires:
+            - test-linux-18.14.0
+            - test-linux-16.19.0
+            - test-linux-14.19.0
+            - test-mac-18.14.0
+            - test-mac-16.19.0
+            - test-mac-14.19.0
+            - test-windows-18.14.0
+            - test-windows-16.19.0
+            - test-windows-14.19.0
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+          context: cfa-release
