@@ -1,6 +1,6 @@
 {
   "name": "electron-chromedriver",
-  "version": "22.0.0",
+  "version": "0.0.0-development",
   "description": "Electron ChromeDriver",
   "repository": "https://github.com/electron/chromedriver",
   "bin": {
@@ -21,7 +21,10 @@
     "extract-zip": "^2.0.0"
   },
   "devDependencies": {
+    "@continuous-auth/client": "^2.2.2",
     "mocha": "^10.1.0",
+    "node-fetch": "^2.6.9",
+    "semver": "^7.3.8",
     "standard": "^13.1.0"
   }
 }
