@@ -22,8 +22,8 @@
   },
   "devDependencies": {
     "@continuous-auth/client": "^2.2.2",
+    "@electron/fiddle-core": "^1.3.0",
     "mocha": "^10.1.0",
-    "node-fetch": "^2.6.9",
     "semver": "^7.3.8",
     "standard": "^13.1.0"
   }
