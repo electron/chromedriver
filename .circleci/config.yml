@@ -57,7 +57,7 @@ jobs:
       - test
   test-mac:
     macos:
-      xcode: "13.3.0"
+      xcode: "14.0.0"
     parameters:
       node-version:
         description: Node.js version to install
