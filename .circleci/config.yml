@@ -104,6 +104,7 @@ jobs:
       - run:
           name: CFA Publish
           command: node script/publish.js
+          no_output_timeout: 30m
 
 workflows:
   test_and_release:
