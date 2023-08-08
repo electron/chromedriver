@@ -1,86 +1,12 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@5.1.0
-  win: circleci/windows@5.0.0
-
-commands:
-  install:
-    parameters:
-      node-version:
-        description: Node.js version to install
-        type: string
-    steps:
-      - node/install:
-          node-version: << parameters.node-version >>
-      - run: nvm use << parameters.node-version >>
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ arch }}-{{ checksum "package-lock.json" }}
-            - v1-dependencies-{{ arch }}
-      - when:
-          condition: << pipeline.git.tag >>
-          steps:
-            - run:
-                name: Update Version
-                command: node script/update-version.js << pipeline.git.tag >>
-            - run: npm install
-      - unless:
-          condition: << pipeline.git.tag >>
-          steps:
-            - run:
-                command: npm install
-                environment:
-                  ELECTRON_CHROMEDRIVER_STABLE_FALLBACK: 1
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ arch }}-{{ checksum "package-lock.json" }}
-  test:
-    steps:
-      - run: node --version
-      - run: npm --version
-      - run: npm test
+  node: electronjs/node@1.1.0
 
 jobs:
-  test-linux:
-    docker:
-      - image: cimg/base:stable
-    parameters:
-      node-version:
-        description: Node.js version to install
-        type: string
-    steps:
-      - install:
-          node-version: << parameters.node-version >>
-      - test
-  test-mac:
-    macos:
-      xcode: "14.0.0"
-    parameters:
-      node-version:
-        description: Node.js version to install
-        type: string
-    steps:
-      - install:
-          node-version: << parameters.node-version >>
-      - test
-  test-windows:
-    executor:
-      name: win/default
-      shell: bash.exe
-    parameters:
-      node-version:
-        description: Node.js version to install
-        type: string
-    steps:
-      - install:
-          node-version: << parameters.node-version >>
-      - test
   release:
     docker:
-      - image: cimg/node:18.14
+      - image: cimg/node:18.17
     steps:
       - checkout
       - run:
@@ -109,47 +35,46 @@ jobs:
 workflows:
   test_and_release:
     jobs:
-      - test-linux:
+      - node/test:
+          name: test-<< matrix.executor >>-<< matrix.node-version >>
+          pkg-manager: npm
+          checkout-steps:
+            - checkout
+            - when:
+                condition: << pipeline.git.tag >>
+                steps:
+                  - run:
+                      name: Update Version
+                      command: node script/update-version.js << pipeline.git.tag >>
+            - unless:
+                condition: << pipeline.git.tag >>
+                steps:
+                  - run: echo 'export ELECTRON_CHROMEDRIVER_STABLE_FALLBACK=1' >> $BASH_ENV
+          test-steps:
+            - run: node --version
+            - run: npm --version
+            - run: npm test
+          use-test-steps: true
           matrix:
+            alias: test
             parameters:
+              executor:
+                - node/linux
+                - node/macos
+                - node/windows
               node-version:
-                - 18.14.0
-                - 16.19.0
-                - 14.19.0
-          filters:
-            tags:
-              only: /.*/
-      - test-mac:
-          matrix:
-            parameters:
-              node-version:
-                - 18.14.0
-                - 16.19.0
-                - 14.19.0
-          filters:
-            tags:
-              only: /.*/
-      - test-windows:
-          matrix:
-            parameters:
-              node-version:
-                - 18.14.0
-                - 16.19.0
-                - 14.19.0
+                # Don't bump above 20.2.0 until CircleCI updates
+                # their Windows image to pick up newer nvm-windows
+                - 20.2.0
+                - 18.17.0
+                - 16.20.1
+                - 14.21.3
           filters:
             tags:
               only: /.*/
       - release:
           requires:
-            - test-linux-18.14.0
-            - test-linux-16.19.0
-            - test-linux-14.19.0
-            - test-mac-18.14.0
-            - test-mac-16.19.0
-            - test-mac-14.19.0
-            - test-windows-18.14.0
-            - test-windows-16.19.0
-            - test-windows-14.19.0
+            - test
           filters:
             tags:
               only: /^v.*/
