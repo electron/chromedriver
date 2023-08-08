@@ -6,6 +6,10 @@
   "bin": {
     "chromedriver": "./chromedriver.js"
   },
+  "files": [
+    "./chromedriver.js",
+    "./download-chromedriver.js"
+  ],
   "scripts": {
     "install": "node ./download-chromedriver.js",
     "lint": "standard --fix",
