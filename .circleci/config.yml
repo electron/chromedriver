@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  node: electronjs/node@1.1.0
+  node: electronjs/node@1.2.0
 
 jobs:
   release:
@@ -38,8 +38,7 @@ workflows:
       - node/test:
           name: test-<< matrix.executor >>-<< matrix.node-version >>
           pkg-manager: npm
-          checkout-steps:
-            - checkout
+          post-node-js-install-steps:
             - when:
                 condition: << pipeline.git.tag >>
                 steps:
