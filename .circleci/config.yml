@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  node: electronjs/node@1.2.0
+  node: electronjs/node@1.4.1
 
 jobs:
   release:
@@ -62,9 +62,7 @@ workflows:
                 - node/macos
                 - node/windows
               node-version:
-                # Don't bump above 20.2.0 until CircleCI updates
-                # their Windows image to pick up newer nvm-windows
-                - 20.2.0
+                - 20.5.1
                 - 18.17.0
                 - 16.20.1
                 - 14.21.3
