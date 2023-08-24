@@ -37,7 +37,6 @@ workflows:
     jobs:
       - node/test:
           name: test-<< matrix.executor >>-<< matrix.node-version >>
-          cache-version: v2
           pkg-manager: npm
           post-node-js-install-steps:
             - when:
