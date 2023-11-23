@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  node: electronjs/node@1.4.1
+  node: electronjs/node@2.1.0
 
 jobs:
   release:
@@ -62,10 +62,13 @@ workflows:
                 - node/macos
                 - node/windows
               node-version:
-                - 20.5.1
-                - 18.17.0
-                - 16.20.1
-                - 14.21.3
+                - '20.5.1'
+                - '18.17.0'
+                - '16.20.1'
+                - '14.21.3'
+            exclude:
+              - executor: node/macos
+                node-version: '14.21.3'
           filters:
             tags:
               only: /.*/
