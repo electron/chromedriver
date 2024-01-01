@@ -14,11 +14,11 @@ jobs:
   smoke_test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c  # tag: v3.3.0
+      - uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
       - name: Setup Node.js
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c  # tag: v3.6.0
+        uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4.0.1
         with:
-          node-version: "16.19.0"
+          node-version: "20.10.0"
       - name: Update Version
         run: node script/update-version.js ${{ github.event.inputs.version }}
       - name: Install Dependencies
@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: smoke_test
     steps:
-      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c  # tag: v3.3.0
+      - uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
       # Tag here, the CircleCI workflow will trigger on the new tag and do the CFA publish
       - name: Push New Tag
         run: |
