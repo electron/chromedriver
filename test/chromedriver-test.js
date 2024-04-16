@@ -11,13 +11,18 @@ function outputHasExpectedVersion (output, version) {
   return output.toString().includes(version)
 }
 
-describe('chromedriver binary', () => {
-  it('launches successfully', async () => {
+describe('chromedriver binary', function () {
+  this.timeout(10000)
+
+  it('launches successfully', async function () {
+    // Skip when this package is not properly configured for an Electron release
+    if (releaseVersion === '0.0.0-development') {
+      this.skip()
+    }
+
     // Get the expected release information for this release
     const versions = await ElectronVersions.create()
     const expectedInfo = versions.getReleaseInfo(releaseVersion)
-
-    assert.notStrictEqual(expectedInfo, undefined, `Could not find Electron release information for release ${releaseVersion}`)
 
     const { chrome: expectedChromeVersion } = expectedInfo
 
@@ -32,4 +37,4 @@ describe('chromedriver binary', () => {
       `Did not find expected Chromium version: ${expectedChromeVersion}\nstdout:\n---\n${stdout}\n---\nstderr:\n${stderr}\n---`
     )
   })
-}).timeout(10000)
+})
