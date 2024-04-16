@@ -1,42 +1,40 @@
 const assert = require('assert')
-const ChildProcess = require('child_process')
+const { spawnSync } = require('child_process')
 const path = require('path')
-const { version } = require('../package')
+const { version: releaseVersion } = require('../package')
+const { ElectronVersions } = require('@electron/fiddle-core')
 
 const describe = global.describe
 const it = global.it
 
-const versions = {
-  3: 'ChromeDriver 2.36',
-  4: 'ChromeDriver 2.40.613160',
-  5: 'ChromeDriver 2.45',
-  6: 'ChromeDriver 76.0.3809.88'
+function outputHasExpectedVersion (output, version) {
+  return output.toString().includes(version)
 }
 
 describe('chromedriver binary', function () {
   this.timeout(10000)
 
-  it('launches successfully', done => {
-    const args = [
+  it('launches successfully', async function () {
+    // Skip when this package is not properly configured for an Electron release
+    if (releaseVersion === '0.0.0-development') {
+      this.skip()
+    }
+
+    // Get the expected release information for this release
+    const versions = await ElectronVersions.create()
+    const expectedInfo = versions.getReleaseInfo(releaseVersion)
+
+    const { chrome: expectedChromeVersion } = expectedInfo
+
+    // Invoke chormedriver with the flag to output the version
+    const { stdout, stderr } = spawnSync(process.execPath, [
       path.join(__dirname, '..', 'chromedriver.js'),
       '-v'
-    ]
-    const chromeDriver = ChildProcess.spawn(process.execPath, args)
+    ])
 
-    let output = ''
-    chromeDriver.stdout.on('data', data => { output += data })
-    chromeDriver.stderr.on('data', data => { output += data })
-
-    chromeDriver.on('close', () => {
-      for (const v in versions) {
-        if (version.startsWith(v)) {
-          const idx = output.indexOf(versions[v])
-          assert.strictEqual(idx, 0, `Unexpected version: ${output}`)
-        }
-      }
-    })
-
-    chromeDriver.on('error', done)
-    chromeDriver.on('close', () => done())
+    assert(
+      outputHasExpectedVersion(stdout, expectedChromeVersion) || outputHasExpectedVersion(stderr, expectedChromeVersion),
+      `Did not find expected Chromium version: ${expectedChromeVersion}\nstdout:\n---\n${stdout}\n---\nstderr:\n${stderr}\n---`
+    )
   })
 })
