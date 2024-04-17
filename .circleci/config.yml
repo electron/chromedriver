@@ -40,6 +40,17 @@ workflows:
           pkg-manager: npm
           post-node-js-install-steps:
             - when:
+                condition:
+                  equal: [node/linux, << matrix.executor >>]
+                steps:
+                  - run:
+                      name: Linux specific setup
+                      command: |
+                        sudo apt-get update
+                        sudo apt-get install -y \
+                          --no-install-recommends \
+                          libnss3
+            - when:
                 condition: << pipeline.git.tag >>
                 steps:
                   - run:
