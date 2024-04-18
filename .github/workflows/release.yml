@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
         version:
-          description: 'version'
+          description: Electron version to use with "v" prefix (e.g. v30.0.0)
           required: true
 
 env:
