@@ -1,0 +1,60 @@
+name: Test
+
+on:
+  workflow_call:
+    inputs:
+      electron-version:
+        required: true
+        type: string
+  workflow_dispatch:
+  schedule:
+    - cron: '0 19 * * 1-5'
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      matrix:
+        node-version:
+          - '20.16.0'
+          - '18.20.4'
+          - '16.20.2'
+          - '14.21.3'
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+        exclude:
+          - os: macos-latest
+            node-version: 14.21.3
+    runs-on: "${{ matrix.os }}"
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - name: "Use Node.js ${{ matrix.node-version }}"
+        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+        with:
+          node-version: "${{ matrix.node-version }}"
+      - name: Update Version
+        if: ${{ inputs.electron-version != '' }}
+        run: node script/update-version.js ${{ inputs.electron-version }}
+      - name: Use Latest Electron Version
+        if: ${{ inputs.electron-version == '' }}
+        run: echo "ELECTRON_CHROMEDRIVER_STABLE_FALLBACK=1" >> $GITHUB_ENV
+      - name: Install Dependencies
+        run: npm ci
+      - name: Run Tests
+        run: |
+          node --version
+          npm --version
+          npm test
