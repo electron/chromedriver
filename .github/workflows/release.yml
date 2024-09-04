@@ -7,36 +7,26 @@ on:
           description: Electron version to use with "v" prefix (e.g. v30.0.0)
           required: true
 
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 jobs:
-  smoke_test:
+  test:
+    uses: ./.github/workflows/test.yml
+    with:
+      electron-version: ${{ github.event.inputs.version }}
+  tag_new_version:
     runs-on: ubuntu-latest
+    environment: deps-releaser
+    needs: test
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-      - name: Setup Node.js
-        uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4.0.1
+      - name: Generate GitHub App token
+        uses: electron/github-app-auth-action@384fd19694fe7b6dcc9a684746c6976ad78228ae # v1.1.1
+        id: generate-token
         with:
-          node-version: "20.10.0"
-      - name: Update Version
-        run: node script/update-version.js ${{ github.event.inputs.version }}
-      - name: Install Dependencies
-        run: npm i
-      - name: Run Tests
-        run: npm test
-  create_new_version:
-    runs-on: ubuntu-latest
-    needs: smoke_test
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-      # Tag here, the CircleCI workflow will trigger on the new tag and do the CFA publish
+          creds: ${{ secrets.DEPS_RELEASER_GH_APP_CREDS }}
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          token: ${{ steps.generate-token.outputs.token }}
+      # Tag here, the publish-npm.yml workflow will trigger on the new tag and do the CFA publish
       - name: Push New Tag
         run: |
           git tag ${{ github.event.inputs.version }}
           git push origin ${{ github.event.inputs.version }}
-      - name: Create Release
-        run: |
-          gh release create ${{ github.event.inputs.version }} -t ${{ github.event.inputs.version }}

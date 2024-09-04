@@ -1,6 +1,6 @@
 # Electron ChromeDriver
 
-[![CircleCI Status](https://circleci.com/gh/electron/chromedriver/tree/main.svg?style=shield)](https://circleci.com/gh/electron/chromedriver/tree/main)
+[![Test](https://github.com/electron/chromedriver/actions/workflows/test.yml/badge.svg)](https://github.com/electron/chromedriver/actions/workflows/test.yml)
 [![npm:](https://img.shields.io/npm/v/electron-chromedriver.svg)](https://www.npmjs.com/package/electron-chromedriver)
 <br>
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
