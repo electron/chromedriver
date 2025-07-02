@@ -51,6 +51,7 @@ jobs:
       - name: Check NPM Credentials
         run: npm whoami
       - name: CFA Publish
+        timeout-minutes: 60
         env:
           CFA_PROJECT_ID: ${{ secrets.CFA_PROJECT_ID }}
           CFA_SECRET: ${{ secrets.CFA_SECRET }}
