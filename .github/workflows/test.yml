@@ -40,6 +40,7 @@ jobs:
             node-version: 14.21.3
     runs-on: "${{ matrix.os }}"
     steps:
+      - run: git config --global core.autocrlf input
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - name: "Use Node.js ${{ matrix.node-version }}"
         uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
