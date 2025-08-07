@@ -7,7 +7,7 @@ const { ElectronVersions } = require('@electron/fiddle-core')
 const describe = global.describe
 const it = global.it
 
-function outputHasExpectedVersion (output, version) {
+function outputHasExpectedVersion(output, version) {
   return output.toString().includes(version)
 }
 
@@ -29,12 +29,13 @@ describe('chromedriver binary', function () {
     // Invoke chormedriver with the flag to output the version
     const { stdout, stderr } = spawnSync(process.execPath, [
       path.join(__dirname, '..', 'chromedriver.js'),
-      '-v'
+      '-v',
     ])
 
     assert(
-      outputHasExpectedVersion(stdout, expectedChromeVersion) || outputHasExpectedVersion(stderr, expectedChromeVersion),
-      `Did not find expected Chromium version: ${expectedChromeVersion}\nstdout:\n---\n${stdout}\n---\nstderr:\n${stderr}\n---`
+      outputHasExpectedVersion(stdout, expectedChromeVersion) ||
+        outputHasExpectedVersion(stderr, expectedChromeVersion),
+      `Did not find expected Chromium version: ${expectedChromeVersion}\nstdout:\n---\n${stdout}\n---\nstderr:\n${stderr}\n---`,
     )
   })
 })

@@ -8,18 +8,20 @@ const args = process.argv.slice(2)
 const options = {
   cwd: process.cwd(),
   env: process.env,
-  stdio: 'inherit'
+  stdio: 'inherit',
 }
 
 const chromeDriverProcess = ChildProcess.spawn(command, args, options)
 
-chromeDriverProcess.on('close', code => {
+chromeDriverProcess.on('close', (code) => {
   if (code !== null && code !== 0) {
     throw new Error(`Chromedriver exited with error code: ${code}`)
   }
 })
 
-chromeDriverProcess.on('error', error => { throw new Error(error) })
+chromeDriverProcess.on('error', (error) => {
+  throw new Error(error)
+})
 
 const killChromeDriver = () => {
   try {

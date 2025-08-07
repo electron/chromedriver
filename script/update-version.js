@@ -7,10 +7,12 @@ const normalizeVersion = (version = '') => {
   return version.startsWith('v') ? version.slice(1) : version
 }
 
-async function updateVersion () {
+async function updateVersion() {
   const version = normalizeVersion(process.argv[2])
   if (!versionFormat.test(version)) {
-    console.error(`Unsupported version ${version} - only major, minor, and patch releases are currently supported`)
+    console.error(
+      `Unsupported version ${version} - only major, minor, and patch releases are currently supported`,
+    )
     return
   }
 
