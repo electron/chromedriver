@@ -2,9 +2,12 @@
   "name": "electron-chromedriver",
   "version": "0.0.0-development",
   "description": "Electron ChromeDriver",
-  "repository": "https://github.com/electron/chromedriver",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/electron/chromedriver.git"
+  },
   "bin": {
-    "chromedriver": "./chromedriver.js"
+    "chromedriver": "chromedriver.js"
   },
   "files": [
     "./chromedriver.js",
