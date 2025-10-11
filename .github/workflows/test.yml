@@ -25,6 +25,7 @@ jobs:
       run:
         shell: bash
     strategy:
+      fail-fast: false
       matrix:
         node-version:
           - '20.17.0'
@@ -34,9 +35,16 @@ jobs:
         os:
           - macos-latest
           - ubuntu-latest
+          - ubuntu-24.04-arm
           - windows-latest
         exclude:
           - os: macos-latest
+            node-version: 14.21.3
+          - os: windows-11-arm
+            node-version: 18.20.4
+          - os: windows-11-arm
+            node-version: 16.20.2
+          - os: windows-11-arm
             node-version: 14.21.3
     runs-on: "${{ matrix.os }}"
     steps:
