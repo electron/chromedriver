@@ -15,9 +15,9 @@
   ],
   "scripts": {
     "install": "node ./download-chromedriver.js",
-    "prettier": "prettier --single-quote --no-semi --check \"**/*.js\"",
-    "prettier:write": "prettier --single-quote --no-semi --write \"**/*.js\"",
-    "test": "mocha && npm run prettier"
+    "prettier": "prettier --experimental-cli --check \"**/*.js\"",
+    "prettier:write": "prettier --experimental-cli --write \"**/*.js\"",
+    "test": "mocha && yarn prettier"
   },
   "engines": {
     "node": ">=10.12.0"

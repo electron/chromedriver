@@ -27,17 +27,11 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - '20.17.0'
-          - '18.20.4'
-          - '16.20.2'
-          - '14.21.3'
+          - '22.12.x'
         os:
           - macos-latest
           - ubuntu-latest
           - windows-latest
-        exclude:
-          - os: macos-latest
-            node-version: 14.21.3
     runs-on: "${{ matrix.os }}"
     steps:
       - run: git config --global core.autocrlf input
@@ -58,4 +52,5 @@ jobs:
         run: |
           node --version
           npm --version
-          npm test
+          yarn --version
+          yarn test
