@@ -1,4 +1,5 @@
 node_modules
 bin
 npm-debug.log
-.npmrc.yarn/install-state.gz
+.npmrc
+.yarn/install-state.gz
