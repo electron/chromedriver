@@ -19,17 +19,10 @@ async function updateVersion() {
   const PJ_PATH = path.join(__dirname, '..', 'package.json')
   const pj = require(PJ_PATH)
 
-  const PJLOCK_PATH = path.join(__dirname, '..', 'package-lock.json')
-  const pjLock = require(PJLOCK_PATH)
-
   try {
     pj.version = version
     await fs.writeFile(PJ_PATH, JSON.stringify(pj, null, 2))
     console.log(`Updated package.json version to ${version}`)
-
-    pjLock.version = version
-    await fs.writeFile(PJLOCK_PATH, JSON.stringify(pjLock, null, 2))
-    console.log(`Updated package-lock.json version to ${version}`)
   } catch (e) {
     console.error('Failed to update chromedriver version: ', e)
     process.exit(1)
