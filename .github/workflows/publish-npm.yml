@@ -10,19 +10,20 @@ jobs:
     uses: ./.github/workflows/test.yml
     with:
       electron-version: ${{ github.ref_name }}
+
   release:
     runs-on: ubuntu-latest
     needs: test
     environment: npm
     permissions:
-      contents: write # for creating new release
       id-token: write # for publishing releases
     steps:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-      - name: "Use Node.js ${{ matrix.node-version }}"
-        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Setup Node.js
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           node-version: "20.17.0"
+          package-manager-cache: false
       - name: Update npm to version that supports trusted publishing
         run: npm install -g npm@^11.5.1
       - name: Update Version
@@ -30,10 +31,13 @@ jobs:
       - name: Confirm Version Updated
         run: node -e "if (require('./package.json').version === '0.0.0-development') process.exit(1)"
       - name: Install Dependencies
-        run: npm ci
+        run: yarn install --immutable
       - name: Publish to npm
         run: npm publish --tag latest
+      - name: Get GitHub app token
+        id: secret-service
+        uses: electron/secret-service-action@3476425e8b30555aac15b1b7096938e254b0e155 # v1.0.0
       - name: Create Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ fromJSON(steps.secret-service.outputs.secrets).GITHUB_TOKEN }}
         run: gh release create ${{ github.ref_name }} -t ${{ github.ref_name }}
