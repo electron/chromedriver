@@ -12,21 +12,36 @@ jobs:
     uses: ./.github/workflows/test.yml
     with:
       electron-version: ${{ github.event.inputs.version }}
-  tag_new_version:
+
+  release:
     runs-on: ubuntu-latest
-    environment: deps-releaser
+    environment: npm-trusted-publisher
     needs: test
+    permissions:
+      id-token: write # for publishing releases
+    env:
+      VERSION: ${{ github.event.inputs.version }}
     steps:
-      - name: Generate GitHub App token
-        uses: electron/github-app-auth-action@384fd19694fe7b6dcc9a684746c6976ad78228ae # v1.1.1
-        id: generate-token
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Setup Node.js
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
-          creds: ${{ secrets.DEPS_RELEASER_GH_APP_CREDS }}
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-        with:
-          token: ${{ steps.generate-token.outputs.token }}
-      # Tag here, the publish-npm.yml workflow will trigger on the new tag and do the publish
-      - name: Push New Tag
-        run: |
-          git tag ${{ github.event.inputs.version }}
-          git push origin ${{ github.event.inputs.version }}
+          node-version: "20.17.0"
+          package-manager-cache: false
+      - name: Update npm to version that supports trusted publishing
+        run: npm install -g npm@^11.5.1
+      - name: Update Version
+        run: node script/update-version.js ${VERSION}
+      - name: Confirm Version Updated
+        run: node -e "if (require('./package.json').version === '0.0.0-development') process.exit(1)"
+      - name: Install Dependencies
+        run: yarn install --immutable
+      - name: Get GitHub app token
+        id: secret-service
+        uses: electron/secret-service-action@3476425e8b30555aac15b1b7096938e254b0e155 # v1.0.0
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ fromJSON(steps.secret-service.outputs.secrets).GITHUB_TOKEN }}
+        run: gh release create ${VERSION} -t ${VERSION}
+      - name: Publish to npm
+        run: npm publish --tag latest
