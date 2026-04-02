@@ -36,13 +36,17 @@ jobs:
     steps:
       - run: git config --global core.autocrlf input
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
       - name: "Use Node.js ${{ matrix.node-version }}"
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version: "${{ matrix.node-version }}"
       - name: Update Version
         if: ${{ inputs.electron-version != '' }}
-        run: node script/update-version.js ${{ inputs.electron-version }}
+        env:
+          VERSION: ${{ inputs.electron-version }}
+        run: node script/update-version.js $VERSION
       - name: Use Latest Electron Version
         if: ${{ inputs.electron-version == '' }}
         run: echo "ELECTRON_CHROMEDRIVER_STABLE_FALLBACK=1" >> $GITHUB_ENV
