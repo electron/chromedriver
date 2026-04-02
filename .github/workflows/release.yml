@@ -43,5 +43,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ fromJSON(steps.secret-service.outputs.secrets).GITHUB_TOKEN }}
         run: gh release create ${VERSION} -t ${VERSION}
+      - name: Determine npm tag
+        id: npm-tag
+        uses: tobysmith568/npm-publish-latest-tag@0c770875a1570db9459461324de1bcba543a6264 # v1
+        with:
+          package-json: ./package.json
       - name: Publish to npm
-        run: npm publish --tag latest
+        run: npm publish --tag ${{ steps.npm-tag.outputs.latest-tag }}
