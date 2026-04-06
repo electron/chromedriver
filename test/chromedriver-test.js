@@ -1,23 +1,20 @@
-const assert = require('assert')
-const { spawnSync } = require('child_process')
-const path = require('path')
+const assert = require('node:assert')
+const { describe, it } = require('node:test')
+const { spawnSync } = require('node:child_process')
+const path = require('node:path')
 const { version: releaseVersion } = require('../package')
 const { ElectronVersions } = require('@electron/fiddle-core')
-
-const describe = global.describe
-const it = global.it
 
 function outputHasExpectedVersion(output, version) {
   return output.toString().includes(version)
 }
 
-describe('chromedriver binary', function () {
-  this.timeout(10000)
-
-  it('launches successfully', async function () {
+describe('chromedriver binary', () => {
+  it('launches successfully', { timeout: 10000 }, async (t) => {
     // Skip when this package is not properly configured for an Electron release
     if (releaseVersion === '0.0.0-development') {
-      this.skip()
+      t.skip()
+      return
     }
 
     // Get the expected release information for this release
