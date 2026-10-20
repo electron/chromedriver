@@ -38,7 +38,7 @@ jobs:
           node-version: "20.17.0"
           package-manager-cache: false
       - name: Update npm to version that supports trusted publishing
-        run: npm install -g npm@^11.5.1
+        run: npm install -g npm@^11.5.1 # zizmor: ignore[adhoc-packages]
       - name: Update Version
         run: node script/update-version.js ${VERSION}
       - name: Confirm Version Updated
